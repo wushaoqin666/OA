@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 
+		把struts2的模式改为开发模式[更改struts.xml文件不用在重启项目]
+	 -->
+	 <!--定义请求名的后缀-->
+    <constant name="struts.action.extension" value="action,do,,"/>
+	<constant name="struts.configuration.xml.reload" value="true"></constant>
+	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.action.excludePattern" value="/static/.*?"/>
+	<include file="cq.xml"></include>
+	<include file="zzy.xml"></include>
+	<include file="ygf.xml"></include>
+	<include file="hjb.xml"></include>
+	<include file="wsq.xml"></include>
+	
+	
+</struts>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="wsq" namespace="/" extends="struts-default">
+		<!-- 模糊查询并分页 -->
+		<action name="selectAll" class="com.oa.action.Accumulation_fund_action" method="SelectAll">
+			<result>/WEB-INF/jsp/gongjijin/accShow.jsp</result>
+		</action>
+		<!-- 删除 -->
+		<action name="deleteById" class="com.oa.action.Accumulation_fund_action" method="DeleteById">
+		</action>
+		<!-- 添加 -->
+		<action name="addAcc" class="com.oa.action.Accumulation_fund_action" method="AddAll">
+			<result type="redirectAction">selectAll</result>
+		</action>
+		<!-- 跳转到添加页面，添加的时候下拉框显示客户姓名 -->
+		<action name="customerList" class="com.oa.action.Accumulation_fund_action" method="AddAccumulation_fund">
+			<result>/WEB-INF/jsp/gongjijin/AddAll.jsp</result>
+		</action>
+		<!-- 通过id得到数据，以便修改 -->
+		<action name="showAvalue" class="com.oa.action.Accumulation_fund_action" method="selectById">
+			<result>WEB-INF/jsp/gongjijin/updatesaved_resource.jsp</result>
+		</action>
+		<!-- 开始修改 -->
+		<action name="updateGjj" class="com.oa.action.Accumulation_fund_action" method="UpdateGjj">
+			<result type="redirectAction"> selectAll</result>
+		</action>
+	</package>
+
+</struts>

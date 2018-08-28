@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="cq" namespace="/" extends="struts-default">
+	
+	<!--************************************** 社保模块**********************************************-->
+		<!--进入社保列表  -->
+		<action name="sheBaoList" class="com.oa.action.Tb_Social_InsuranceAction" method="sheBaoList">
+			<result name="sheBaoList">WEB-INF/jsp/sheBao/sheBaoList.jsp</result>
+		</action>
+		<!--进入到添加社保页面  -->
+		<action name="addSheBao" class="com.oa.action.Tb_Social_InsuranceAction" method="addSheBao">
+			<result name="addSheBao">WEB-INF/jsp/sheBao/addSheBao.jsp</result>
+		</action>
+		<!--进入到催交社保页面  -->
+		<action name="cuiJiaoSheBao" class="com.oa.action.Tb_Social_InsuranceAction" method="cuiJiaoSheBao">
+			<result name="cuiJiaoSheBao">WEB-INF/jsp/sheBao/cuiJiaoSheBao.jsp</result>
+		</action>
+		<!--进入到社保记录页面  -->
+		<action name="sheBaoJiLu" class="com.oa.action.Tb_Social_InsuranceAction" method="sheBaoJiLu">
+			<result name="sheBaoJiLu">WEB-INF/jsp/sheBao/sheBaoJiLu.jsp</result>
+		</action>
+		<!--进入到社保缴费页面  -->
+		<action name="sheBaoRecord" class="com.oa.action.Tb_Social_InsuranceAction" method="sheBaoRecord">
+			<result name="sheBaoRecord">WEB-INF/jsp/sheBao/sheBaoRecord.jsp</result>
+		</action>
+		<!--进入到修改社保页面  -->
+		<action name="upSheBao" class="com.oa.action.Tb_Social_InsuranceAction" method="upSheBao">
+			<result name="upSheBao">WEB-INF/jsp/sheBao/upSheBao.jsp</result>
+		</action>
+		<!--修改社保信息  -->
+		<action name="toUpSheBao" class="com.oa.action.Tb_Social_InsuranceAction" method="toUpSheBao">
+			<result name="toUpSheBao" type="chain">sheBaoList</result>
+		</action>
+		<!--进入到短信模板页面  -->
+		<action name="duanXinMoBan" class="com.oa.action.Tb_Social_InsuranceAction" method="duanXinMoBan">
+			<result name="duanXinMoBan">WEB-INF/jsp/sheBao/duanXinMoBan.jsp</result>
+		</action>
+		<!--添加社保信息  -->
+		<action name="toAddSheBao" class="com.oa.action.Tb_Social_InsuranceAction" method="toAddSheBao">
+			<result name="toAddSheBao" type="chain">sheBaoList</result>
+		</action>
+		<!-- 删除社保信息 -->
+		<action name="delSheBao" class="com.oa.action.Tb_Social_InsuranceAction" method="delSheBao">
+			<result name="delSheBao" type="chain">sheBaoList</result>
+		</action>
+		
+		<action name="duanXinById" class="com.oa.action.Tb_Social_InsuranceAction" method="duanXinById">
+			<result name="duanXinById" type="chain">cuiJiaoSheBao</result>
+		</action>
+	
+	<!--****************************************社保模块完*********************************************-->
+		
+	<!--****************************************统计报表模块***********************************************-->
+		<!-- 进入到社保费用统计页面 -->
+		<action name="sheBaoCount" class="com.oa.action.BaoBiaoAction" method="sheBaoCount">
+			<result name="sheBaoCount">WEB-INF/jsp/baoBiao/sheBaoCount.jsp</result>
+		</action>
+		<!--进入到公积金统计页面  -->
+		<action name="gongJiJinCount" class="com.oa.action.BaoBiaoAction" method="gongJiJinCount">
+			<result name="gongJiJinCount">WEB-INF/jsp/baoBiao/gongJiJinCount.jsp</result>
+		</action>
+		<!-- 进入到工资统计页面 -->
+		<action name="gongZiCount" class="com.oa.action.BaoBiaoAction" method="gongZiCount">
+			<result name="gongZiCount">WEB-INF/jsp/baoBiao/gongZiCount.jsp</result>
+		</action>
+		<!--进入到人才外包统计页面 -->
+		<action name="renCaiCount" class="com.oa.action.BaoBiaoAction" method="renCaiCount">
+			<result name="renCaiCount">WEB-INF/jsp/baoBiao/renCaiCount.jsp</result>
+		</action>
+		<!-- 进入到财务统计页面 -->
+		<action name="caiWuCount" class="com.oa.action.BaoBiaoAction" method="caiWuCount">
+			<result name="caiWuCount">WEB-INF/jsp/baoBiao/caiWuCount.jsp</result>
+		</action>
+		
+		<action name="exportDown" class="com.oa.action.ExportAction" method="exportDown">
+			<result name="exportDown" type="stream">
+				<param name="contentType">${contentType}</param>
+                <param name="inputName">outputStream</param>
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="bufferSize">1024</param>
+			</result>
+		</action>
+	<!--******************************************统计报表模块完**********************************************-->
+	</package>
+	
+	<package name="showJson" extends="json-default">
+		<!--json传参：用于显示公司名称  -->
+		<action name="gongSiList" class="com.oa.action.Tb_Social_InsuranceAction" method="gongSiList">
+			<result name="gongSiList" type="json">
+				<param name="root">tb_companyList</param>
+			</result>
+		</action>
+		
+		<action name="keHuList" class="com.oa.action.Tb_Social_InsuranceAction" method="keHuList">
+			<result name="keHuList" type="json">
+				<param name="root">tb_customersList</param>
+			</result>
+		</action>
+	</package>
+
+</struts>

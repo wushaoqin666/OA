@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="ygf" namespace="/" extends="struts-default">
+			<action name="zhaopinList" class="com.oa.action.RenCaiAction"
+			method="zhaopinList">
+			<result name="zhaopin">/WEB-INF/jsp/RenCai/zhaopinList.jsp</result>
+		</action>
+		<action name="updatezpxx" class="com.oa.action.RenCaiAction"
+			method="updatezpxx">
+			<result name="updatezpxx" type="chain">zhaopinList</result>
+		</action>
+		<action name="personList" class="com.oa.action.RenCaiAction"
+			method="personList">
+			<result name="person">/WEB-INF/jsp/RenCai/personList.jsp</result>
+		</action>
+		
+		<action name="deleterencai" class="com.oa.action.RenCaiAction"
+			method="deletezhaopin">
+			<result name="deletezhaopin" type="chain">zhaopinList</result>
+		</action>
+		<action name="updateZhaoPin" class="com.oa.action.RenCaiAction" method="updateZhaoPin">
+			<result name="updatezp">/WEB-INF/jsp/RenCai/updateZhaoPin.jsp</result>
+		</action>
+		<action name="updateZhaoPinunEdit" class="com.oa.action.RenCaiAction" method="updateZhaoPinunEdit">
+			<result name="updateZhaoPE">/WEB-INF/jsp/RenCai/updatezhaopinunEdit.jsp</result>
+		</action>
+		
+		<!-- updatePerson  的action-->
+		<action name="updatePerson" class="com.oa.action.RenCaiAction" method="updatePerson">
+			<result name="updatePs">/WEB-INF/jsp/RenCai/updatePerson.jsp</result>
+		</action>
+		
+		<action name="personIorU" class="com.oa.action.RenCaiAction" method="personIorU">
+			<result name="perIorU" type="chain">personList</result>
+		</action>
+		<action name="toaddPerson" class="com.oa.action.RenCaiAction">
+			<result>/WEB-INF/jsp/RenCai/addPerson.jsp</result>
+		</action>
+		<action name="addPerson" class="com.oa.action.RenCaiAction" method="addPerson">
+			<result name="addPn" type="chain">personList</result>
+		</action>
+		
+		<action name="deletePerson" class="com.oa.action.RenCaiAction" method="deletePerson">
+			<result name="deletePn" type="chain">personList</result>
+		</action>
+		<!--Laowu 的action  -->
+		<action name="laowuList" class="com.oa.action.RenCaiAction"
+			method="laowuList">
+			<result name="laowu">/WEB-INF/jsp/RenCai/laowuList.jsp</result>
+		</action>
+		
+		<action name="toaddLaowu" class="com.oa.action.RenCaiAction">
+			<result>/WEB-INF/jsp/RenCai/addLaowu.jsp</result>
+		</action>
+		<action name="addLaowu" class="com.oa.action.RenCaiAction" method="addLaowu">
+			<result name="addss" type="chain">laowuList</result>
+		</action>
+		<action name="updateLaoWu" class="com.oa.action.RenCaiAction" method="updateLaoWu">
+			<result name="updateLW">/WEB-INF/jsp/RenCai/updateLaoWu.jsp</result>
+		</action>
+		<action name="deleteLaoWu" class="com.oa.action.RenCaiAction" method="deleteLaoWu">
+			<result name="deleteLW" type="chain">laowuList</result>
+		</action>
+		<action name="personjobIorU" class="com.oa.action.RenCaiAction" method="personjobIorU">
+			<result name="perjobIorU" type="chain">laowuList</result>
+		</action>
+		
+	</package>
+</struts>

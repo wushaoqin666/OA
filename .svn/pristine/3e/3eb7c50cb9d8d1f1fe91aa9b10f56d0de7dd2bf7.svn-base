@@ -1,0 +1,156 @@
+package com.oa.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.NativeWebRequest;
+
+import com.oa.dao.impl.Tb_Social_InsuranceDaoImpl;
+import com.oa.entity.Tb_company;
+import com.oa.entity.Tb_customer;
+import com.oa.entity.Tb_sms_template;
+import com.oa.entity.Tb_social_insurance;
+import com.oa.service.Tb_Social_InsuranceService;
+import com.oa.utils.ConstSystem;
+import com.oa.utils.Page;
+@Service
+@Transactional
+public class Tb_Social_InsuranceServiceImpl implements Tb_Social_InsuranceService{
+	@Autowired
+	private Tb_Social_InsuranceDaoImpl tb_Social_InsuranceDao;
+
+	@Override
+	public Page<Tb_social_insurance> sheBaoPage(String now, String size,String name,String idCard,String sbCard) {
+		Map<String , Object> map=new HashMap<String,Object>();
+		StringBuffer hql= new StringBuffer("from Tb_social_insurance s join fetch s.tb_customer c where s.status = 0");
+		if(name!=null && name!=""){
+			hql.append(" and c.name like:name");
+			map.put("name", "%"+name+"%");
+		}
+		if(idCard!=null && idCard!=""){
+			hql.append(" and s.idCard like:idCard");
+			map.put("idCard", "%"+idCard+"%");
+		}
+		if(sbCard!=null && sbCard!=""){
+			hql.append(" and s.sbCard like:sbCard");
+			map.put("sbCard", "%"+sbCard+"%");
+		}
+		
+		
+		Page<Tb_social_insurance> page=new Page<Tb_social_insurance>();
+		int pageNow=1;
+		if(now!=null){
+			pageNow=Integer.parseInt(now);
+		}
+		page.setPageNow(pageNow);
+		int pageSize=ConstSystem.PAGE_SIZE;
+		if(size!=null){
+			pageSize=Integer.parseInt(size);
+		}
+		page.setPageSize(pageSize);
+		int count=Integer.parseInt(tb_Social_InsuranceDao.sheBaoCount().toString());
+		page.setCount(count);
+		int pageCount=count%pageSize==0?(count/pageSize):(count/pageSize)+1;
+		page.setPageCount(pageCount);
+		List<Tb_social_insurance> list = tb_Social_InsuranceDao.sheBaoList(hql,pageNow, pageSize,map);
+		page.setList(list);
+		return page;
+	}
+
+	@Override
+	public void addSheBao(Tb_social_insurance tb_social_insurance) {
+		// TODO Auto-generated method stub
+		tb_Social_InsuranceDao.addSheBao(tb_social_insurance);
+	}
+
+	@Override
+	public void delSheBao(Integer id) {
+		// TODO Auto-generated method stub
+		tb_Social_InsuranceDao.delSheBao(id);
+	}
+
+	@Override
+	public void upSheBao(Tb_social_insurance tb_social_insurance) {
+		// TODO Auto-generated method stub
+		tb_Social_InsuranceDao.upSheBao(tb_social_insurance);
+	}
+
+	@Override
+	public Tb_social_insurance sheBaoById(Integer id) {
+		// TODO Auto-generated method stub
+		return tb_Social_InsuranceDao.sheBaoById(id);
+	}
+
+	@Override
+	public Tb_customer keHuByIdCard(String idCard) {
+		// TODO Auto-generated method stub
+		return tb_Social_InsuranceDao.keHuByIdCard(idCard);
+	}
+
+	@Override
+	public List<Tb_company> gongSiList() {
+		
+		return tb_Social_InsuranceDao.gongSiList();
+	}
+
+	@Override
+	public List<Tb_customer> keHuList() {
+		
+		return tb_Social_InsuranceDao.keHuList();
+	}
+
+	@Override
+	public Tb_customer keHuById(Integer id) {
+		
+		return tb_Social_InsuranceDao.keHuById(id);
+	}
+
+	@Override
+	public Page<Tb_sms_template> duanXinPage(String now, String size, String template_code, String subject) {
+		Map<String, Object> map=new HashMap<>();
+		StringBuffer hql=new StringBuffer("from Tb_sms_template where 1=1");
+		if(template_code!=null && template_code !=""){
+			hql.append(" and template_code like:template_code");
+			map.put("template_code", template_code);
+		}
+		if(subject!=null && subject!=""){
+			hql.append(" and subject like:subject");
+			map.put("subject", subject);
+		}
+		
+		
+		Page<Tb_sms_template> page=new Page<Tb_sms_template>();
+		int pageNow=1;
+		if(now!=null){
+			pageNow=Integer.parseInt(now);
+		}
+		page.setPageNow(pageNow);
+		int pageSize=ConstSystem.PAGE_SIZE;
+		if(size!=null){
+			pageSize=Integer.parseInt(size);
+		}
+		page.setPageSize(pageSize);
+		int count=Integer.parseInt(tb_Social_InsuranceDao.duanXinCount().toString());
+		page.setCount(count);
+		int pageCount=count%pageSize==0?(count/pageSize):(count/pageSize)+1;
+		page.setPageCount(pageCount);
+		List<Tb_sms_template> list = tb_Social_InsuranceDao.duanXinList(hql, pageNow, pageSize, map);
+		page.setList(list);
+		return page;
+	}
+
+	@Override
+	public Tb_sms_template duanXinById(Integer id) {
+		
+		return tb_Social_InsuranceDao.duanXinById(id);
+	}
+
+	
+
+	
+	
+}

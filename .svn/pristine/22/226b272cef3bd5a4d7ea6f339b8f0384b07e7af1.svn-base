@@ -1,0 +1,347 @@
+package com.oa.action;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.oa.dao.duanXinDao;
+import com.oa.entity.Tb_company;
+import com.oa.entity.Tb_customer;
+import com.oa.entity.Tb_sms_record;
+import com.oa.entity.Tb_sms_template;
+import com.oa.entity.Tb_social_insurance;
+import com.oa.entity.Tb_social_insurance_record;
+import com.oa.entity.tb_user;
+import com.oa.service.impl.Tb_Social_InsuranceServiceImpl;
+import com.oa.service.impl.duanXinServiceImpl;
+import com.oa.service.impl.login_serimpl;
+import com.oa.service.impl.sheBaoJiLuServiceImpl;
+import com.oa.utils.Page;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class Tb_Social_InsuranceAction extends ActionSupport{
+	@Autowired
+	private Tb_Social_InsuranceServiceImpl tb_Social_InsuranceServiceImpl;
+	@Autowired
+	private duanXinServiceImpl duanXinService;
+	@Autowired
+	private login_serimpl loginService;
+	@Autowired
+	private sheBaoJiLuServiceImpl sheBaoDao;
+	private Page<Tb_social_insurance> page;
+	private List<Tb_customer> tb_customersList;
+	private List<Tb_company> tb_companyList;
+	private Tb_customer tb_customer;
+	private Page<Tb_social_insurance_record> sheBaoJiLuPage;
+	private Integer duanXinId;
+	private Tb_sms_template duanXin;
+	private String now;
+	private String size;
+	private String name;
+	private String idCard;
+	private String sbCard;
+	private Integer id;
+	private String template_code;
+	private String subject;
+	private Tb_sms_record tb_sms_record;
+	private Tb_social_insurance tb_social_insurance;
+	private String userId;
+
+	/**
+	 *社保信息列表
+	 * @return
+	 */
+	public String sheBaoList(){
+		page= tb_Social_InsuranceServiceImpl.sheBaoPage(now, size,name,idCard,sbCard);
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		session.put("name", name);
+		session.put("idCard", idCard);
+		session.put("sbCard", sbCard);
+		return "sheBaoList";
+	}
+	
+	/**
+	 * 进入添加社保页面
+	 * @return
+	 */
+	public String addSheBao(){
+		return "addSheBao";
+	}
+	/**
+	 * 添加社保信息
+	 * @return
+	 */
+	public String toAddSheBao(){
+		tb_customer=tb_Social_InsuranceServiceImpl.keHuByIdCard(tb_social_insurance.getIdCard());
+		tb_social_insurance.setTb_customer(tb_customer);
+		tb_Social_InsuranceServiceImpl.addSheBao(tb_social_insurance);
+		return "toAddSheBao";
+	}
+	/**
+	 * ajax查询公司名称
+	 * @return
+	 */
+	public String gongSiList(){
+		tb_companyList= tb_Social_InsuranceServiceImpl.gongSiList();
+		return "gongSiList";
+	}
+	/**
+	 * 查询客户名称
+	 * @return
+	 */
+	public String keHuList(){
+		tb_customersList= tb_Social_InsuranceServiceImpl.keHuList();
+		return "keHuList";
+	}
+	/**
+	 * 根据编号查询客户信息
+	 * @return
+	 */
+	public String keHuById(){
+		tb_customer= tb_Social_InsuranceServiceImpl.keHuById(id);
+		return "keHuById";
+	}
+	/**
+	 * 进入社保催交页面
+	 * @return
+	 */
+	public String cuiJiaoSheBao(){
+		return "cuiJiaoSheBao";
+	}
+	/**
+	 * 发送短信
+	 * @return
+	 */
+	public String addSms_record(){
+		tb_user user = loginService.userByName(userId);
+		tb_sms_record.setUser_id(user.getId());
+		duanXinService.addSms_record(tb_sms_record);
+		return "addSms_record";
+	}
+	/**
+	 * 进入到社保记录页面
+	 * @return
+	 */
+	public String sheBaoJiLu(){
+		sheBaoJiLuPage= sheBaoDao.sheBaoJiLuPage(now, size, name, idCard, sbCard);
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		session.put("name", name);
+		session.put("idCard", idCard);
+		session.put("sbCard", sbCard);
+		return "sheBaoJiLu";
+	}
+	/**
+	 * 社保缴费页面
+	 * @return
+	 */
+	public String sheBaoRecord(){
+		
+		return "sheBaoRecord";
+	}
+	/**
+	 * 进入到修改社保页面
+	 * @return
+	 */
+	public String upSheBao(){
+		tb_social_insurance = tb_Social_InsuranceServiceImpl.sheBaoById(id);
+		return "upSheBao";
+	}
+	/**
+	 * 修改社保信息
+	 * @return
+	 */
+	public String toUpSheBao(){
+		tb_customer=tb_Social_InsuranceServiceImpl.keHuByIdCard(tb_social_insurance.getIdCard());
+		tb_social_insurance.setTb_customer(tb_customer);
+		tb_Social_InsuranceServiceImpl.upSheBao(tb_social_insurance);
+		return "toUpSheBao";
+	}
+	/**
+	 * 删除社保信息
+	 * @return
+	 */
+	public String delSheBao(){
+		tb_Social_InsuranceServiceImpl.delSheBao(id);
+		return "delSheBao";
+	}
+	
+	/**
+	 * 进入 到短信模板页面
+	 * @return
+	 */
+	public String duanXinMoBan(){
+		tb_sms_templatePage= duanXinService.duanXinPage(now, size, template_code, subject);
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		session.put("template_code", template_code);
+		session.put("subject", subject);
+		return "duanXinMoBan";
+	}
+	
+	public String duanXinById(){
+		duanXin=duanXinService.duanXinById(duanXinId);
+		return "duanXinById";
+	}
+
+	public Page<Tb_social_insurance> getPage() {
+		return page;
+	}
+
+
+
+	public void setPage(Page<Tb_social_insurance> page) {
+		this.page = page;
+	}
+
+
+
+	public String getNow() {
+		return now;
+	}
+
+	public void setNow(String now) {
+		this.now = now;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public Tb_social_insurance getTb_social_insurance() {
+		return tb_social_insurance;
+	}
+
+	public void setTb_social_insurance(Tb_social_insurance tb_social_insurance) {
+		this.tb_social_insurance = tb_social_insurance;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public String getSbCard() {
+		return sbCard;
+	}
+
+	public void setSbCard(String sbCard) {
+		this.sbCard = sbCard;
+	}
+
+	public List<Tb_customer> getTb_customersList() {
+		return tb_customersList;
+	}
+
+	public void setTb_customersList(List<Tb_customer> tb_customersList) {
+		this.tb_customersList = tb_customersList;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public List<Tb_company> getTb_companyList() {
+		return tb_companyList;
+	}
+
+	public void setTb_companyList(List<Tb_company> tb_companyList) {
+		this.tb_companyList = tb_companyList;
+	}
+
+	public Tb_customer getTb_customer() {
+		return tb_customer;
+	}
+
+	public void setTb_customer(Tb_customer tb_customer) {
+		this.tb_customer = tb_customer;
+	}
+
+	public String getTemplate_code() {
+		return template_code;
+	}
+
+	public void setTemplate_code(String template_code) {
+		this.template_code = template_code;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	
+	public Page<Tb_social_insurance_record> getSheBaoJiLuPage() {
+		return sheBaoJiLuPage;
+	}
+
+	public void setSheBaoJiLuPage(Page<Tb_social_insurance_record> sheBaoJiLuPage) {
+		this.sheBaoJiLuPage = sheBaoJiLuPage;
+	}
+
+	public Integer getDuanXinId() {
+		return duanXinId;
+	}
+
+	public void setDuanXinId(Integer duanXinId) {
+		this.duanXinId = duanXinId;
+	}
+	
+	public Tb_sms_template getDuanXin() {
+		return duanXin;
+	}
+
+	public void setDuanXin(Tb_sms_template duanXin) {
+		this.duanXin = duanXin;
+	}
+
+	private Page<Tb_sms_template> tb_sms_templatePage;
+	public Page<Tb_sms_template> getTb_sms_templatePage() {
+		return tb_sms_templatePage;
+	}
+
+	public void setTb_sms_templatePage(Page<Tb_sms_template> tb_sms_templatePage) {
+		this.tb_sms_templatePage = tb_sms_templatePage;
+	}
+	
+	public Tb_sms_record getTb_sms_record() {
+		return tb_sms_record;
+	}
+
+	public void setTb_sms_record(Tb_sms_record tb_sms_record) {
+		this.tb_sms_record = tb_sms_record;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+}

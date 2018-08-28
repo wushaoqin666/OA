@@ -1,0 +1,8 @@
+driver=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/oa
+user=root
+password=ROOT
+
+initsize=3
+minsize=2
+maxsize=10

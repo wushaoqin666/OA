@@ -1,0 +1,187 @@
+package com.oa.action;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.oa.dao.impl.Tb_need_job_DaoImpl;
+import com.oa.entity.Tb_company;
+import com.oa.entity.Tb_customer;
+import com.oa.entity.Tb_need_job;
+import com.oa.entity.Tb_person;
+import com.oa.entity.Tb_person_job;
+import com.oa.service.impl.Tb_need_jobServiceImpl;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+public class RenCaiAction extends ActionSupport {
+	private int id;
+	private Tb_person person;
+	
+	private Tb_person_job person_job;
+	
+	private Tb_need_job need_job;
+	@Autowired
+	private Tb_need_jobServiceImpl job_DaoImpl;
+	
+	
+	/**
+	 * 招聘信息
+	 * @return
+	 */
+	public String zhaopinList() {
+		ActionContext req = ActionContext.getContext();
+		List<Tb_need_job> list=job_DaoImpl.RenCaiList();
+		req.put("list", list);
+		return "zhaopin";
+	}
+	public String updateZhaoPin() {
+		ActionContext req = ActionContext.getContext();
+		Tb_need_job tb_need=job_DaoImpl.selectneedId(id);
+		List<Tb_company> tb_company=job_DaoImpl.selectcompanyname();
+		req.put("tb_need", tb_need);
+		req.put("tb_companylist", tb_company);
+		return "updatezp";
+	}
+	public String updateZhaoPinunEdit() {
+		ActionContext req = ActionContext.getContext();
+		Tb_need_job tb_need=job_DaoImpl.selectneedId(id);
+		req.put("tb_need", tb_need);
+		return "updateZhaoPE";
+	}
+	public String deletezhaopin() {
+		job_DaoImpl.delete(id);
+		return "deletezhaopin";
+	}
+	public String updatezpxx() {
+		job_DaoImpl.InsertOrUpdate(need_job);
+		return "updatezpxx";
+	}
+	/**
+	 * 人才信息
+	 * @return
+	 */
+	public String personList() {
+		ActionContext req = ActionContext.getContext();
+		List<Tb_person> list=job_DaoImpl.selectPerson();
+		req.put("list", list);
+		return "person";
+	}
+	
+	public String updatePerson() {
+		ActionContext req = ActionContext.getContext();
+		Tb_person tb_person=job_DaoImpl.selectpersonId(id);
+		List<Tb_customer> customerList=job_DaoImpl.selectpanyName();
+		req.put("person", tb_person);
+		req.put("customerList", customerList);
+		return "updatePs";
+	}
+	
+	public String toaddPerson() {
+		ActionContext req = ActionContext.getContext();
+		List<Tb_customer> customerList=job_DaoImpl.selectpanyName();
+		req.put("customerList", customerList);
+		return "toaddperson";
+	}
+	
+	public String personIorU() {
+		job_DaoImpl.InsertOr(person);
+		return "perIorU";
+	}
+	
+	public String addPerson() {
+		job_DaoImpl.InsertOr(person);
+		return "addPn";
+	}
+	
+	public String deletePerson() {
+		job_DaoImpl.deleteperson(id);
+		return "deletePn";
+	}
+	
+	/**
+	 * 劳务信息
+	 * @return
+	 */
+	public String laowuList() {
+		ActionContext req = ActionContext.getContext();
+		List<Tb_person_job> list=job_DaoImpl.selectPersonjob();
+		req.put("list", list);
+		return "laowu";
+	}
+	
+	public String personjobIorU() {
+		job_DaoImpl.InsertOrjob(person_job);
+		return "perjobIorU";
+	}
+	public String updateLaoWu() {
+		ActionContext req = ActionContext.getContext();
+		Tb_person_job tb_personjob=job_DaoImpl.selectpersonjobId(id);
+		List<Tb_customer> customerList=job_DaoImpl.selectpanyName();
+		List<Tb_company> tb_company=job_DaoImpl.selectcompanyname();
+		req.put("tb_companylist", tb_company);
+		req.put("customerList", customerList);
+		req.put("personjob", tb_personjob);
+		return "updateLW";
+	}
+	
+	public String toaddLaowu() {
+		ActionContext req = ActionContext.getContext();
+		List<Tb_customer> customerList=job_DaoImpl.selectpanyName();
+		List<Tb_company> tb_company=job_DaoImpl.selectcompanyname();
+		req.put("tb_companylist", tb_company);
+		req.put("customerList", customerList);
+		return "addLaowu";
+	}
+	
+	public String deleteLaoWu() {
+		job_DaoImpl.deletepersonjob(id);
+		return "deleteLW";
+	}
+	
+	public String addLaowu() {
+		job_DaoImpl.InsertOrjob(person_job);
+		return "addss";
+	}
+	
+	public Tb_person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Tb_person person) {
+		this.person = person;
+	}
+
+	public Tb_person_job getPerson_job() {
+		return person_job;
+	}
+
+	public void setPerson_job(Tb_person_job person_job) {
+		this.person_job = person_job;
+	}
+
+	public Tb_need_job getNeed_job() {
+		return need_job;
+	}
+
+	public void setNeed_job(Tb_need_job need_job) {
+		this.need_job = need_job;
+	}
+
+	public Tb_need_jobServiceImpl getJob_DaoImpl() {
+		return job_DaoImpl;
+	}
+
+	public void setJob_DaoImpl(Tb_need_jobServiceImpl job_DaoImpl) {
+		this.job_DaoImpl = job_DaoImpl;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+}

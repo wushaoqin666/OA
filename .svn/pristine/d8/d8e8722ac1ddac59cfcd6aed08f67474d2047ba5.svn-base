@@ -1,0 +1,41 @@
+package com.oa.dao.impl;
+
+
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.oa.dao.login;
+
+
+import com.oa.entity.tb_user;
+@Repository
+public class loginimpl implements login{
+
+	@Autowired
+	private SessionFactory SessionFactory;
+	
+	@Override
+	public tb_user selectuser(String username,String password) {
+		String sql="from tb_user where username=? and PASSWORD=?";
+		return (tb_user) SessionFactory.getCurrentSession().createQuery(sql).setString(0, username).setString(1, password).uniqueResult();
+	}
+
+	
+	
+	
+	public SessionFactory getSessionFactory() {
+		return SessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		SessionFactory = sessionFactory;
+	}
+
+
+
+
+
+
+}

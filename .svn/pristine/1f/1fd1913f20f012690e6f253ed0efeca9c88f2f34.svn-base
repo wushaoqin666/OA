@@ -1,0 +1,220 @@
+package com.oa.entity;
+
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+@Entity
+public class Tb_need_job {
+	@Id
+	@GeneratedValue
+  private Integer id;
+	@Column(name="jobname")
+  private String jobname;
+	@Column(name="jobcontent")
+  private String jobcontent;
+	@Column(name="jobtype")
+  private String jobtype;
+	@Column(name="industry")
+  private String industry;
+	@Column(name="needperson")
+  private Integer needperson;
+	@Column(name="paytype")
+  private String paytype;
+	@Column(name="price")
+  private Double price;
+	@Column(name="address")
+  private String address;
+	@Column(name="starttime")
+  private java.sql.Date starttime;
+	@Column(name="endtime")
+  private java.sql.Date endtime;
+	@Column(name="status")
+  private String status;
+	@Column(name="infotype")
+  private String infotype;
+	@Column(name="createby")
+  private Integer createby;
+	@Column(name="createtime")
+  private Date createtime;
+	@Column(name="updateby")
+  private Integer updateby;
+	@Column(name="updatetime")
+  private Date updatetime;
+	@Column(name="remark")
+  private String remark;
+	@ManyToOne
+	@JoinColumn(name="companyId")
+	private Tb_company tb_companys;
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getJobname() {
+    return jobname;
+  }
+
+  public void setJobname(String jobname) {
+    this.jobname = jobname;
+  }
+
+  public String getJobcontent() {
+    return jobcontent;
+  }
+
+  public void setJobcontent(String jobcontent) {
+    this.jobcontent = jobcontent;
+  }
+
+  public String getJobtype() {
+    return jobtype;
+  }
+
+  public void setJobtype(String jobtype) {
+    this.jobtype = jobtype;
+  }
+
+  public String getIndustry() {
+    return industry;
+  }
+
+  public void setIndustry(String industry) {
+    this.industry = industry;
+  }
+
+  public Integer getNeedperson() {
+    return needperson;
+  }
+
+  public void setNeedperson(Integer needperson) {
+    this.needperson = needperson;
+  }
+
+  public String getPaytype() {
+    return paytype;
+  }
+
+  public void setPaytype(String paytype) {
+    this.paytype = paytype;
+  }
+
+  public Double getPrice() {
+    return price;
+  }
+
+  public void setPrice(Double price) {
+    this.price = price;
+  }
+
+
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public java.sql.Date getStarttime() {
+    return starttime;
+  }
+
+  public void setStarttime(java.sql.Date starttime) {
+    this.starttime = starttime;
+  }
+
+  public java.sql.Date getEndtime() {
+    return endtime;
+  }
+
+  public void setEndtime(java.sql.Date endtime) {
+    this.endtime = endtime;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getInfotype() {
+    return infotype;
+  }
+
+  public void setInfotype(String infotype) {
+    this.infotype = infotype;
+  }
+
+  public Integer getCreateby() {
+    return createby;
+  }
+
+  public void setCreateby(Integer createby) {
+    this.createby = createby;
+  }
+
+  public Date getCreatetime() {
+    return createtime;
+  }
+
+  public void setCreatetime(Date createtime) {
+    this.createtime = createtime;
+  }
+
+  public Integer getUpdateby() {
+    return updateby;
+  }
+
+  public void setUpdateby(Integer updateby) {
+    this.updateby = updateby;
+  }
+
+  public Date getUpdatetime() {
+    return updatetime;
+  }
+
+  public void setUpdatetime(Date updatetime) {
+    this.updatetime = updatetime;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
+
+
+
+
+public Integer getid() {
+	return id;
+}
+
+public void setid(Integer id) {
+	this.id = id;
+}
+
+public Tb_company getTb_companys() {
+	return tb_companys;
+}
+
+public void setTb_companys(Tb_company tb_companys) {
+	this.tb_companys = tb_companys;
+}
+
+
+  
+}
